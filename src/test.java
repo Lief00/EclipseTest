@@ -33,4 +33,6 @@ public class test {
           e.printStackTrace() ;
       }
     }
+    RequestDispatcher dispatcher = request.getRequestDispatcher("フォワード先URL");
+    dispatcher.forward(request, response)
 }

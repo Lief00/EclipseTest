@@ -14,6 +14,8 @@
 
 <body>
 <p>入力確認テスト</p>
+<input type="date">
+
 
 	<%
 	
@@ -23,6 +25,25 @@
 
 	
 	%>
+	
+
+    <p></p>
+	
+	<form action="./ireponadd" method="post">
+ 	<input type="text" value="ID"> <input type="text" value="name"> <input type="text" value="romaji">
+　　<input type="submit" value="追加"><br>
+    </form>
+    
+    <form action="./ireponupdate" method="post">
+ 	<input type="text" value="変更前ID"> <input type="text" value="ID"> <input type="text" value="name"> <input type="text" value="romaji">
+　　<input type="submit" value="更新"><br>
+    </form>
+
+
+	
+	
+
+
 </body>
 
 </html>

@@ -39,30 +39,47 @@ public class ireponserver extends HttpServlet {
 		}
 		
 		
-		// 接続文字列の設定
-		String url = "jdbc:postgresql://localhost:5432/testdb";
-		String user = "postgres";
-		String password = "pass";
+	       final String URL = "jdbc:postgresql://127.0.0.1:5432/testdb10";
+	        final String USER = "postgres";
+	        final String PASS = "pass";
+	        final String SQL = "insert into syain(id,name,romaji) VALUES(?,?,?)";
+	        
+	        
+	
+        
 
 		// SELECT文の作成・実行
-		String sql = "SELECT * from test2";
+		String sql = "SELECT * from syain";
+		
 
 		// PostgreSQLに接続
 		String col1 = null;
 		String col2 = null;
 		String col3 = null;
-		String col4 = "a";
+		String col4 = "ID name romaji";
 		
-		try (Connection con = DriverManager.getConnection(url, user, password);
+   
+
+		
+		try (Connection con = DriverManager.getConnection(URL, USER, PASS);
 				Statement stmt = con.createStatement();
 				ResultSet result = stmt.executeQuery(sql);) {
+			
+	
 
 			// 実行結果の取得
 			while (result.next()) {
 				col1 = result.getString(1);
 				col2 = result.getString(2);
 				col3 = result.getString(3);
-				col4 = col4+ "   " +col1 + " " + col2 + " " + col3;
+				col4 = col4+ "</p>" +col1 + " " + col2 + " " + col3+"	<form action=\"./ireponsearch\" method=\"post\">\r\n"
+						+ "　　<input type=\"submit\" value=\"詳細検索\"><br>\r\n"
+						+ "	</form>\r\n"
+						+ "	<p></p>\r\n"
+						+ "	\r\n"
+						+ "	<form action=\"./irepondeleat\" method=\"post\">\r\n"
+						+ "　　<input type=\"submit\" value=\"削除\"><br>\r\n"
+						+ "    </form>";
 				
 				System.out.println(col4);
 			}
