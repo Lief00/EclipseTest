@@ -10,22 +10,37 @@ import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/Login")
-public  class LoginServlet  {
+public  class LoginServlet extends HttpServlet {
+	
+    private static final long serialVersionUID = 1L;
+    
+
+    public LoginServlet() {
+        super();
+    }
+
+
+    @Override
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("login.jsp").forward(request, response);
-	}
-	/**
-	 * �����Ă������[�U�[ID�ƃp�X���[�h������DB�ɐڑ������O�C���F�؂��s��
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userId = request.getParameter("user_id");
+		String password =request.getParameter("password");
+		
+		try{
+		    Class.forName("org.postgresql.Driver");
+			    //
+		}
+		catch (ClassNotFoundException e) {
+		    //
+		}
+		
 
 		// ���[�U�[���瑗�M���ꂽ���[�U�[ID�ƃp�X���[�h���擾����B
-		String userId = request.getParameter("userid");
-		String password = request.getParameter("password");
 
 		// ���O�C���F�،�ɑJ�ڂ������i�[����
 		String path = "";
@@ -35,17 +50,21 @@ public  class LoginServlet  {
 			String url = "jdbc:postgresql://localhost:5432/test1";
 			String user = "postgres";
 			String pass = "pass";
+			String id = null;
 
 			/*
 			 * ���s����SQL
 			 * id��password����v���郆�[�U�[��id���Ƃ��Ă���
 			 */
-			String sql = "SELECT id FROM users WHERE id=? AND password=?";
+			String sql = "SELECT * FROM user4 WHERE name = ? AND pass =?";
 
 			// PostgreSQL�ɐڑ�����
 			//Class.forName("org.postgresql.Driver");
 			try (Connection con = DriverManager.getConnection(url,user, pass);
 					PreparedStatement pstmt = con.prepareStatement(sql)) {
+				
+
+
 
 				// ���͂��ꂽ���[�U�[ID�ƃp�X���[�h��SQL�̏����ɂ���
 				pstmt.setString(1, userId);
@@ -53,20 +72,22 @@ public  class LoginServlet  {
 
 				// SQL�̎��s
 				ResultSet res = pstmt.executeQuery();
+				
+	
 
 				// ���[�U�[ID�ƃp�X���[�h����v���郆�[�U�[�����݂�����
 				if (res.next()) {
 					// user_id�����N�G�X�g�X�R�[�v�ɐݒ肷��
-					request.setAttribute("user_id", res.getString("id"));
-
-					// ���O�C��������ʂɑJ�ڂ���
-					path = "irepon.jsp";
+					String name = res.getString("name");
+					request.setAttribute("logined", "ログインしています"+"</p>"+"こんにちは！"+name+"さん！"+"</p>");
+					// ログイン成功時
+					path = "WEB-INF/jsp/hp2.jsp";
 				} else {
 					// ���O�C�����s�̕�����ǉ�����
-					request.setAttribute("loginFailure", "���O�C���Ɏ��s���܂���");
+					request.setAttribute("loginFailure", "ユーザーネームかパスワードが間違っています");
 
-					// ���O�C���Ɏ��s�����Ƃ��͂�����x���O�C����ʂ�\������
-					path = "login.jsp";
+					// ログイン失敗時
+					path = "WEB-INF/jsp/login.jsp";
 				}
 			}
 		}catch (SQLException e) {
@@ -75,6 +96,7 @@ public  class LoginServlet  {
 
 		RequestDispatcher rd = request.getRequestDispatcher(path);
 		rd.forward(request, response);
+		
 	}
 
 }

@@ -129,7 +129,7 @@ public class Touroku extends HttpServlet {
 		}
 		
 		request.setAttribute("hoge", col4);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/irepon.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
 		dispatcher.forward(request, response);
 	}
 

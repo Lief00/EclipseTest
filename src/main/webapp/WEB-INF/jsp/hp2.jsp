@@ -12,9 +12,14 @@
 <body style="background: #DDDDDD">
 <h1  style="text-align: center;">サンプルページ</h1>
 <div style="text-align: right;">
+<%String failureMessage = (String)request.getAttribute("logined"); %>
 
-<a href="touroku">ログイン</a>
-<a href="touroku2">会員登録</a>
+<!-- エラーメッセージが存在するときだけ表示する -->
+<% if (failureMessage != null) {%>
+	<%=failureMessage %>
+<%} %>
+<a href="HPServlet">ログアウト</a>
+
 
 
 </div>
