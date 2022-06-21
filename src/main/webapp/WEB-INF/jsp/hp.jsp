@@ -15,8 +15,13 @@
 
 <a href="touroku">ログイン</a>
 <a href="touroku2">会員登録</a>
-
-
 </div>
+
+<h2>予約状況</h2>
+<table border="1">
+<tr>
+<th>日付</th><th>時間</th><th>車種</th>
+</tr>
+</table>
 </body>
 </html>
